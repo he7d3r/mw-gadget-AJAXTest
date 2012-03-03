@@ -1,7 +1,7 @@
 /**
  * Baseado em [[w:en:Wikipedia:WikiProject_User_scripts/Guide/Ajax#Edit_a_page_and_other_common_actions]]
  * MediaWiki ajax.js
- * @traking: [[Special:GlobalUsage/User:Helder.wiki/Tools/AJAXTest.js]] ([[File:User:Helder.wiki/Tools/AJAXTest.js]])
+ * @tracking: [[Special:GlobalUsage/User:Helder.wiki/Tools/AJAXTest.js]] ([[File:User:Helder.wiki/Tools/AJAXTest.js]])
  */
 if ( 'Especial:Livro' === mw.config.get( 'wgPageName' ) ) {
 	$(function () {

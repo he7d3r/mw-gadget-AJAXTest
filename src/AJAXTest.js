@@ -3,7 +3,54 @@
  * MediaWiki ajax.js
  * @tracking: [[Special:GlobalUsage/User:Helder.wiki/Tools/AJAXTest.js]] ([[File:User:Helder.wiki/Tools/AJAXTest.js]])
  */
-if ( 'Especial:Livro' === mw.config.get( 'wgPageName' ) ) {
+function editPage( info ) {
+	// Edit page (must be done through POST)
+        $.ajax({
+                url: mw.util.wikiScript( 'api' ),
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                        format: 'json',
+                        action: 'edit',
+                        title: info.title,
+                        text: info.text,
+                        summary: info.summary,
+                        token: mw.user.tokens.get( 'editToken' )
+                },
+                success: function( data ) {
+                        if ( data && data.edit && data.edit.result && data.edit.result == 'Success' ) {
+                                alert( 'Page edited!' );
+                        } else {
+                                alert( 'The edit query returned an error. =(' );
+                        }
+                },
+                error: function() {
+                        alert( 'The ajax request failed.' );
+                }
+        });
+}
+function getTextFromSpecialBook() {
+	var	bookName = $( '#titleInput' ).val(),
+		text = ';(Este seria o índice criado para o livro "' +
+			bookName + '")\n\n== Índice ==\n* [[/',
+		$chapters = $( '#collectionList' ).find( 'strong' ),
+		list = [];
+
+	if ( !$chapters.length ) {
+		alert( 'É preciso definir os nomes dos capítulos!' );
+		return;
+	}
+	$chapters.each( function( ){
+		list.push( $( this ).text() );
+	} );
+	text += list.join( '/]] [[Imagem:00%.svg]]\n* [[/' ) +
+		'/]] [[Imagem:00%.svg]]\n\n{' +
+		'{Fases5}}\n{' + '{AutoCat}}\n{' +
+		'{Ordem alfabética|' + bookName.substr(0,1) + '}}';
+	return text;
+}
+
+if ( mw.config.get('wgCanonicalSpecialPageName') === 'Book' ) {
 	$(function () {
 		$( mw.util.addPortletLink(
 			'p-cactions',
@@ -12,61 +59,11 @@ if ( 'Especial:Livro' === mw.config.get( 'wgPageName' ) ) {
 			'ca-ajax-edit'
 		)).click( function( e ) {
 			e.preventDefault();
-			editar();
+			editPage({
+				title: 'User:Helder.wiki/AJAX',
+				text: getTextFromSpecialBook(),
+				summary: 'Trying to edit my sandbox using AJAX...'
+			});
 		});
 	});
 }
-
-function editar() {
-	// Edit page (must be done through POST)
-	function editPage( token ) {
-		var	nomedolivro = $( '#titleInput' ).val(),
-			texto = ';(Este seria o índice criado para o livro "' +
-				nomedolivro + '")\n\n== Índice ==\n* [[/',
-			pagina = 'User:Helder.wiki/AJAX',
-			$caps = $( '#collectionList' ).find( 'strong' ),
-			list = [];
-
-		if ( !$caps.length ) {
-			alert( 'É preciso definir os nomes dos capítulos!' );
-			return;
-		}
-		$caps.each( function( ){
-			list.push( $( this ).text() );
-		} );
-		texto += list.join( '/]] [[Imagem:00%.svg]]\n* [[/' ) + '/]] [[Imagem:00%.svg]]\n\n{' +
-			'{Fases5}}\n{' + '{AutoCat}}\n{' + '{Ordem alfabética|' + nomedolivro.substr(0,1) + '}}';
-
-		$.post(
-			mw.util.wikiScript( 'api' ), {
-				action: 'edit',
-				title: pagina,
-				text: texto,
-				summary: 'Trying to edit my sandbox using AJAX...',
-				token: token
-			},
-			function() {
-				alert( 'A página foi editada.' );
-			}
-		).error(function() {
-			alert( 'Não foi possível editar a página. =(' );
-		});
-	}
-	// Get the token and then edit the page
-	$.getJSON(
-		mw.util.wikiScript( 'api' ), {
-			format: 'json',
-			action: 'query',
-			prop: 'info',
-			indexpageids: '1',
-			intoken: 'edit',
-			titles: 'Whatever'
-		},
-		function( data ) {
-			var token = data.query.pages[ data.query.pageids[0] ].edittoken;
-			editPage(token);
-		}
-	).error(function() {
-		alert( 'Houve um erro ao solicitar um token. =(' );
-	});
-}//editar

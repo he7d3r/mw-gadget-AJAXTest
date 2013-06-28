@@ -1,8 +1,14 @@
 /**
  * Baseado em [[w:en:Wikipedia:WikiProject_User_scripts/Guide/Ajax#Edit_a_page_and_other_common_actions]]
  * MediaWiki ajax.js
+ * @author: [[User:Helder.wiki]]
  * @tracking: [[Special:GlobalUsage/User:Helder.wiki/Tools/AJAXTest.js]] ([[File:User:Helder.wiki/Tools/AJAXTest.js]])
  */
+/*jshint browser: true, devel: true, camelcase: true, curly: true, eqeqeq: true, immed: true, latedef: true, newcap: true, noarg: true, noempty: true, nonew: true, quotmark: true, undef: true, unused: true, strict: true, trailing: true, maxlen: 120, evil: true, onevar: true */
+/*global jQuery, mediaWiki */
+( function ( mw, $ ) {
+'use strict';
+
 function editPage( info ) {
 	// Edit page (must be done through POST)
         $.ajax({
@@ -18,7 +24,7 @@ function editPage( info ) {
                         token: mw.user.tokens.get( 'editToken' )
                 },
                 success: function( data ) {
-                        if ( data && data.edit && data.edit.result && data.edit.result == 'Success' ) {
+                        if ( data && data.edit && data.edit.result && data.edit.result === 'Success' ) {
                                 alert( 'Page edited!' );
                         } else {
                                 alert( 'The edit query returned an error. =(' );
@@ -67,3 +73,5 @@ if ( mw.config.get('wgCanonicalSpecialPageName') === 'Book' ) {
 		});
 	});
 }
+
+}( mediaWiki, jQuery ) );

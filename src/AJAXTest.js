@@ -1,7 +1,8 @@
 /**
  * Baseado em [[w:en:Wikipedia:WikiProject_User_scripts/Guide/Ajax#Edit_a_page_and_other_common_actions]]
  * MediaWiki ajax.js
- * @author: [[User:Helder.wiki]]
+ * @author: Helder (https://github.com/he7d3r)
+ * @license: CC BY-SA 3.0 <https://creativecommons.org/licenses/by-sa/3.0/>
  * @tracking: [[Special:GlobalUsage/User:Helder.wiki/Tools/AJAXTest.js]] ([[File:User:Helder.wiki/Tools/AJAXTest.js]])
  */
 /*jshint browser: true, devel: true, camelcase: true, curly: true, eqeqeq: true, immed: true, latedef: true, newcap: true, noarg: true, noempty: true, nonew: true, quotmark: true, undef: true, unused: true, strict: true, trailing: true, maxlen: 120, evil: true, onevar: true */

@@ -66,7 +66,7 @@ if ( mw.config.get('wgCanonicalSpecialPageName') === 'Book' ) {
 		)).click( function( e ) {
 			e.preventDefault();
 			editPage({
-				title: 'User:Helder.wiki/AJAX',
+				title: 'User:' + mw.config.get('wgUserName') + '/AJAX',
 				text: getTextFromSpecialBook(),
 				summary: 'Trying to edit my sandbox using AJAX...'
 			});

@@ -19,7 +19,7 @@
 				title: info.title,
 				text: info.text,
 				summary: info.summary,
-				token: mw.user.tokens.get( 'editToken' )
+				token: mw.user.tokens.get( 'csrfToken' )
 			},
 			success: function ( data ) {
 				if ( data && data.edit && data.edit.result && data.edit.result === 'Success' ) {
